@@ -14,28 +14,39 @@ class CatManager:
         self.cats = {}
 
     def add_cat(self, cat):
-        if cat.cat_id in self.cats:
-            print("错误：这个小猫编号已经存在")
+        if cat.name in self.cats:
+            print("错误：这个小猫名字已经存在")
 
         else:
             self.cats[cat.cat_id] = cat
             print(f"已添加：{cat}")
 
-    def remove_cat(self, cat_id):
-        if cat_id in self.cats:
-            del self.cats[cat_id] #小猫名字索引的小猫对象
-            print(f"已删除小猫编号{cat_id}")
-        else:
-            print("错误：小猫编号未找到")
+    def remove_cat(self, name):
+        del_flag = False
+        for cat in self.cats.values():
+            if cat.name == name:
+                del self.cats[cat.cat_id]
+                print(f"已删除小猫名字{name}")
+                del_flag = True
+                break
+        if del_flag == False:
+                print("错误：小猫名字未找到")
+
+
     def show_all_cats(self):
         for cat in self.cats.values():
             print(cat)
 
-    def find_cat(self, cat_id):
-        if cat_id in self.cats:
-            print(f"找到小猫：{self.cats[cat_id]}")
-        else:
+    def find_cat(self, name):
+        find_flag = False
+        for cat in self.cats.values():
+            if cat.name == name:
+                print(f"找到小猫：{cat}")
+                find_flag = True
+                break
+        if find_flag == False:
             print("未找到小猫")
+
 
 
 def main():
@@ -56,13 +67,13 @@ def main():
             character= input("请输入小猫性格：")
             cat_manager.add_cat(Cat(cat_id, name, color, character))
         elif choice == '2':
-            cat_id = input("请输入要删除的小猫编号：")
-            cat_manager.remove_cat(cat_id)
+            name = input("请输入要删除的小猫名字：")
+            cat_manager.remove_cat(name)
         elif choice == '3':
             cat_manager.show_all_cats()
         elif choice == '4':
-            cat_id = input("请输入要查询的小猫编号：")
-            cat_manager.find_cat(cat_id)
+            name = input("请输入要查询的小猫名字：")
+            cat_manager.find_cat(name)
         elif choice == '5':
             print("正在退出。。。")
             break
